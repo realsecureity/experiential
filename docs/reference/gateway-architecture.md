@@ -970,8 +970,9 @@ or eviction returns an explicit unavailable error and never reconstructs content
 
 The accounting SQLite stores hashes, frozen authority, route identity, state transitions, tokens,
 latency and estimated cost, never content or keys. Separate [local capture](local_gateway_traffic.md)
-is default-on (`--ghost` disables it). `GET /usage` and `GET /usage.json` render the same schema-v2 report
-and expose only aggregate, per-identity, and physical-attempt `by_billing_source` accounting.
+is default-on (`--ghost` disables it). `GET /usage` and `GET /usage.json` render the same schema-v3 report
+and expose only aggregate, per-identity, physical-attempt `by_billing_source`, and per-calling-app
+`by_client_app` accounting (each request freezes a classified `client_app` and bounded `User-Agent`).
 An anonymous request reads the organization-wide report; a request carrying a virtual key as
 `Authorization: Bearer <key>` reads the report scoped to that key's identity, and an invalid
 key is rejected with the standard 401 error.
